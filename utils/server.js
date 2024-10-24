@@ -7,6 +7,10 @@ const cookieParser = require("cookie-parser");
 
 const express = require("express");
 
+// Import middleware
+const notFoundMiddleware = require("../middleware/not-found");
+const errorHandlerMiddleware = require("../middleware/error-handler");
+
 function createServer() {
   const app = express();
 
@@ -23,7 +27,7 @@ function createServer() {
   app.use(
     rateLimiter({
       WindowMs: 15 * 60 * 1000, // 15 minutes
-      max: 100000, // limit each IP to 100000 request per window
+      max: 100000 // limit each IP to 100000 request per window
     })
   );
 
@@ -31,7 +35,7 @@ function createServer() {
   app.use(
     cors({
       origin: "http://192.168.0.110:3000",
-      credentials: true,
+      credentials: true
     })
   );
 
@@ -43,6 +47,8 @@ function createServer() {
   //   routes
 
   // Error handler middleware
+  app.use(notFoundMiddleware);
+  app.use(errorHandlerMiddleware);
 
   return app;
 }
