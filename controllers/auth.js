@@ -23,7 +23,7 @@ const login = async (req, res) => {
     throw new UnauthenticatedError("Invalid Email Address");
   }
 
-  const isPaswordCorrect = await User.validPassword(password);
+  const isPaswordCorrect = await user.validPassword(password);
   if (!isPaswordCorrect) {
     throw new UnauthenticatedError("Invalid Password");
   }
