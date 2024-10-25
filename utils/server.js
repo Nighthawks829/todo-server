@@ -13,6 +13,7 @@ const errorHandlerMiddleware = require("../middleware/error-handler");
 
 // Import routes
 const authRouter = require("../routes/auth");
+const userRouter = require("../routes/user");
 
 function createServer() {
   const app = express();
@@ -49,6 +50,7 @@ function createServer() {
 
   //   routes
   app.use("/api/v1/auth", authRouter);
+  app.use("/api/v1/user", userRouter);
 
   // Error handler middleware
   app.use(notFoundMiddleware);
