@@ -26,5 +26,8 @@
     "mysql2": "^3.11.3",
     "sequelize": "^6.37.4",
     "xss-clean": "^0.1.4"
+  },
+  "devDependencies": {
+    "wrangler": "^3.83.0"
   }
 }

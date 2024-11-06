@@ -5,30 +5,6 @@ const bcrypt = require("bcrypt");
 
 const User = UserSchema;
 
-const addUser = async (req, res) => {
-  const { name, email, password } = req.body;
-
-  const user = await User.create({
-    name,
-    email,
-    password
-  });
-
-  const token = user.generateJWT();
-  if (user) {
-    res.status(StatusCodes.CREATED).json({
-      user: {
-        userId: user.id,
-        name,
-        email
-      },
-      token
-    });
-  } else {
-    throw new BadRequestError("Unable to create new user. Try again later.");
-  }
-};
-
 const getUser = async (req, res) => {
   if (req.user.userId !== req.params.id) {
     throw new ForbiddenError("No allow to get other user profile");
@@ -122,7 +98,6 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  addUser,
   getUser,
   updateUser,
   deleteUser

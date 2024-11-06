@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const rateLimiter = require("express-rate-limit");
 const {
-  addUser,
   getUser,
   updateUser,
   deleteUser
@@ -20,8 +19,6 @@ const apiLimiter = rateLimiter({
     msg: "Too many request from this IP. Please try again after 15 minutes"
   }
 });
-
-router.route("/").post(addUser);
 
 router
   .route("/:id")

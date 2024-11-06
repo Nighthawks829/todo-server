@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const rateLimiter = require("express-rate-limit");
-const { login, logout } = require("../controllers/auth");
+const { login, logout, register } = require("../controllers/auth");
 
 require("dotenv").config();
 
@@ -16,5 +16,6 @@ const apiLimiter = rateLimiter({
 
 router.post("/login", apiLimiter, login);
 router.post("/logout", apiLimiter, logout);
+router.post("/register",apiLimiter,register)
 
 module.exports = router;
