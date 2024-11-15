@@ -59,13 +59,29 @@ const updateUser = async (req, res) => {
 
   await user.save();
   const token = user.generateJWT();
-  res.clearCookie("user");
-  res.cookie("user", token, {
-    httpOnly: true,
+  res.clearCookie("token");
+  res.cookie("token", token, {
+    httpOnly: false,
     secure: false, // Use secure cookies in production
     sameSite: "strict",
     maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
   });
+
+  res.clearCookie("user");
+  res.cookie(
+    "user",
+    JSON.stringify({
+      userId: user.id,
+      name: user.name,
+      email: user.email
+    }),
+    {
+      httpOnly: false,
+      secure: false, // Use secure cookies in production
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+    }
+  );
 
   res.status(StatusCodes.OK).json({
     user: {

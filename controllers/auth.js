@@ -28,7 +28,6 @@ const login = async (req, res) => {
 
   const token = user.generateJWT();
   res.cookie("token", token, {
-    // httpOnly: true,
     httpOnly: false,
     secure: false, // Use secure cookies in production
     sameSite: "strict",
