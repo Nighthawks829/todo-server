@@ -38,7 +38,7 @@ function createServer() {
   //   CORS configuration
   app.use(
     cors({
-      origin: "https://frontend.nighthawks0230.com",
+      origin: "https://nighthawks0230.com",
       credentials: true
     })
   );

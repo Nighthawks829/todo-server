@@ -30,7 +30,8 @@ const addTask = async (req, res) => {
 
 const getAllTasks = async (req, res) => {
   const tasks = await Task.findAll({
-    where: { userId: req.user.userId }
+    where: { userId: req.user.userId },
+    order: [["updatedAt", "DESC"]] // Sort by updatedAt in descending order
   });
 
   res.status(StatusCodes.OK).json({ tasks, count: tasks.length });
