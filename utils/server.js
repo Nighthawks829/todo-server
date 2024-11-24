@@ -2,7 +2,6 @@ require("express-async-errors");
 const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");
-const rateLimiter = require("express-rate-limit");
 const cookieParser = require("cookie-parser");
 
 const express = require("express");
@@ -29,20 +28,26 @@ function createServer() {
   app.use(xss());
 
   //   Rate limiting middleware
-  app.use(
-    rateLimiter({
-      WindowMs: 15 * 60 * 1000, // 15 minutes
-      max: 100000 // limit each IP to 100000 request per window
-    })
-  );
+  // app.use(
+  //   rateLimiter({
+  //     WindowMs: 15 * 60 * 1000, // 15 minutes
+  //     max: 100000 // limit each IP to 100000 request per window
+  //   })
+  // );
 
   //   CORS configuration
   app.use(
     cors({
-      origin: "http://192.168.0.110:3000",
+      origin: "https://frontend.nighthawks0230.com",
       credentials: true
     })
   );
+
+  app.use(function(req, res, next) {  
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});  
 
   // Test API
   app.get("/", (req, res) => {

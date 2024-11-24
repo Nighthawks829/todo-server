@@ -13,8 +13,8 @@ const login = async (req, res) => {
 
   const user = await User.findOne({
     where: {
-      email: email,
-    },
+      email: email
+    }
   });
 
   if (!user) {
@@ -27,11 +27,13 @@ const login = async (req, res) => {
   }
 
   const token = user.generateJWT();
+
   res.cookie("token", token, {
     httpOnly: false,
-    secure: false, // Use secure cookies in production
-    sameSite: "strict",
+    secure: true, // Use secure cookies in production
+    sameSite: "none",
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    domain: ".nighthawks0230.com",
   });
 
   res.cookie(
@@ -39,13 +41,14 @@ const login = async (req, res) => {
     JSON.stringify({
       userId: user.id,
       name: user.name,
-      email: user.email,
+      email: user.email
     }),
     {
       httpOnly: false,
-      secure: false, // Use secure cookies in production
-      sameSite: "strict",
+      secure: true, // Use secure cookies in production
+      sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      domain: ".nighthawks0230.com",
     }
   );
 
@@ -53,9 +56,9 @@ const login = async (req, res) => {
     user: {
       userId: user.id,
       name: user.name,
-      email: user.email,
+      email: user.email
     },
-    token: token,
+    token: token
   });
 };
 
@@ -72,7 +75,7 @@ const register = async (req, res) => {
   const user = await User.create({
     name,
     email,
-    password,
+    password
   });
 
   const token = user.generateJWT();
@@ -81,9 +84,9 @@ const register = async (req, res) => {
       user: {
         userId: user.id,
         name,
-        email,
+        email
       },
-      token,
+      token
     });
   } else {
     throw new BadRequestError("Unable to create new user. Try again later.");
@@ -93,5 +96,5 @@ const register = async (req, res) => {
 module.exports = {
   login,
   logout,
-  register,
+  register
 };
